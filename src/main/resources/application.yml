@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.example.backend: DEBUG
+  file:
+    name: logs/application.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+spring:
+  application:
+    name: backend-base
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: never
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+# JWT 설정 (운영에서는 환경변수로 주입 권장)
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-me-in-production}
+    expiration-seconds: 3600 # 1시간 (access 토큰)
+    refresh-expiration-seconds: 604800 # 7일 (refresh 토큰)
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+    operationsSorter: method
+    tagsSorter: alpha
