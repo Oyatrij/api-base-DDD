@@ -19,9 +19,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    hibernate:
+      ddl-auto: validate  # Flyway가 관리하므로 validate만 사용
   sql:
     init:
       mode: never
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baselineOnMigrate: true  # 기존 DB에서도 마이그레이션 시작 가능
 
 mybatis:
   mapper-locations: classpath*:mapper/**/*.xml
@@ -42,3 +48,17 @@ springdoc:
     path: /swagger-ui
     operationsSorter: method
     tagsSorter: alpha
+
+# Actuator 설정
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      # 환경별로 다르게 설정됨
+  endpoint:
+    health:
+      show-details: when-authorized  # 인증된 사용자에게만 상세 정보 표시
+  metrics:
+    export:
+      simple:
+        enabled: true

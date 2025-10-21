@@ -10,7 +10,12 @@ spring:
       connection-timeout: 20000
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: validate  # Flyway가 관리
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baselineOnMigrate: true  # 운영 중 처음 마이그레이션 적용
+    outOfOrder: false  # 버전 순서대로만 적용 (보안)
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     producer:
@@ -20,3 +25,13 @@ spring:
       group-id: ${KAFKA_CONSUMER_GROUP:backend-group}
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+# Actuator 운영 환경 설정 (필요한 엔드포인트만 노출)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus  # 필요한 것만 노출
+  endpoint:
+    health:
+      show-details: when-authorized  # 인증된 사용자에게만 상세 정보 표시

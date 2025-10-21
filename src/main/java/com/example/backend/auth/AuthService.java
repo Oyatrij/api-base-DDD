@@ -2,6 +2,7 @@ package com.example.backend.auth;
 
 import com.example.backend.auth.dto.AuthTokensDto;
 import com.example.backend.infrastructure.security.JwtUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

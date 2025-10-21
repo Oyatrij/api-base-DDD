@@ -34,6 +34,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/refresh").permitAll()
+                // Actuator 보안 설정
+                .requestMatchers("/actuator/health").permitAll()  // health는 누구나 접근 가능
+                .requestMatchers("/actuator/health/**").permitAll()
+                .requestMatchers("/actuator/**").authenticated()  // 나머지는 인증 필요
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
