@@ -58,7 +58,3 @@ management:
   endpoint:
     health:
       show-details: when-authorized  # 인증된 사용자에게만 상세 정보 표시
-  metrics:
-    export:
-      simple:
-        enabled: true
